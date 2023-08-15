@@ -1,0 +1,40 @@
+spin_manifest_version = "1"
+authors = ["Diversable <dan.mantei@outlook.com>"]
+description = "building an example htmx app with spin"
+name = "htmx-example"
+trigger = { type = "http", base = "/" }
+version = "0.1.0"
+
+[[component]]
+id = "htmx-example"
+source = "target/wasm32-wasi/release/htmx_example.wasm"
+allowed_http_hosts = ["0.0.0.0:8000"]
+[component.trigger]
+# route = "/..."
+route = "/"
+[component.build]
+command = "cargo build --target wasm32-wasi --release"
+watch = ["src/**/*.rs", "Cargo.toml"]
+
+
+[[component]]
+id = "clicked"
+source = "clicked/target/wasm32-wasi/release/clicked.wasm"
+allowed_http_hosts = []
+[component.trigger]
+route = "/clicked"
+[component.build]
+command = "cargo build --target wasm32-wasi --release"
+workdir = "clicked"
+watch = ["src/**/*.rs", "Cargo.toml"]
+
+[[component]]
+id = "go-home"
+source = "go-home/target/wasm32-wasi/release/go_home.wasm"
+allowed_http_hosts = []
+[component.trigger]
+route = "/gohome"
+[component.build]
+command = "cargo build --target wasm32-wasi --release"
+workdir = "go-home"
+watch = ["src/**/*.rs", "Cargo.toml"]
